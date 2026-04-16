@@ -3,8 +3,8 @@
 ## Indexed implementation workflow: ML flow for lattice field theory
 
 1. **Define the target lattice theory setup**
-   - Choose dimensionality, lattice size, boundary conditions, and action (for example, scalar \(\phi^4\), gauge, or effective model).
-   - Fix the probability target \(p(x)\propto e^{-S(x)}\), observables, and acceptance-quality metrics.
+   - Choose dimensionality, lattice size, boundary conditions, and action (for example, scalar phi^4, gauge, or effective model).
+   - Fix the probability target p(x) ∝ exp(-S(x)), observables, and acceptance-quality metrics.
 
 2. **Generate baseline data and diagnostics**
    - Produce reference samples (HMC/MCMC or trusted simulators) on representative lattice sizes.
@@ -17,20 +17,20 @@
 4. **Specify coupling transforms in each layer**
    - Split lattice variables into passive/active partitions.
    - Update active part with
-     - \(s_\theta(\cdot)\): scale network
-     - \(t_\theta(\cdot)\): shift network
+     - s_theta(.): scale network
+     - t_theta(.): shift network
    - Maintain tractable log-Jacobian accumulation for training/inference.
 
-5. **⚑ Activation choice for \(s_\theta\) and \(t_\theta\)**
+5. **⚑ Activation choice for s_theta and t_theta**
    - **Recommended default:** GELU or SiLU in hidden layers for smooth gradients.
-   - Use linear output heads for both networks; constrain \(s_\theta\) through a bounded map (for stability), e.g. \(\alpha\tanh(\hat{s}_\theta)\).
+   - Use linear output heads for both networks; constrain s_theta through a bounded map (for stability), e.g. alpha * tanh(s_theta_hat).
 
-6. **⚑ Parameterization choice for \(s_\theta\) and \(t_\theta\)**
+6. **⚑ Parameterization choice for s_theta and t_theta**
    - Parameterize the affine coupling as
-     - \(x'_{\text{active}} = x_{\text{active}}\odot \exp(s_\theta(x_{\text{passive}})) + t_\theta(x_{\text{passive}})\)
+     - x_active' = x_active * exp(s_theta(x_passive)) + t_theta(x_passive)
    - Practical stability option:
-     - \(s_\theta=\alpha\tanh(\hat{s}_\theta)\) with \(\alpha\in[1,3]\)
-     - \(t_\theta\) unconstrained linear head (optionally zero-centered initialization)
+     - s_theta = alpha * tanh(s_theta_hat), with alpha in [1,3]
+     - t_theta unconstrained linear head (optionally zero-centered initialization)
 
 7. **Train the model**
    - Optimize reverse KL (or mixed objective) between flow-induced distribution and lattice target.
@@ -46,4 +46,4 @@
 
 10. **Iterate and scale**
     - Tune depth/width, coupling schedule, and regularization.
-    - Re-check stability of \(s_\theta\)/\(t_\theta\) settings when scaling lattice size.
+    - Re-check stability of s_theta/t_theta settings when scaling lattice size.
