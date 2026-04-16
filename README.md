@@ -4,7 +4,7 @@
 
 1. **Define the target lattice theory setup**
    - Choose dimensionality, lattice size, boundary conditions, and action (for example, scalar φ⁴, gauge, or effective model).
-   - Fix the probability target `p(x) ∝ exp(-S(x))`, observables, and acceptance-quality metrics.
+   - Fix the probability target `p(x) is proportional to exp(-S(x))`, observables, and acceptance-quality metrics.
 
 2. **Generate baseline data and diagnostics**
    - Produce reference samples (HMC/MCMC or trusted simulators) on representative lattice sizes.
@@ -17,8 +17,8 @@
 4. **Specify coupling transforms in each layer**
    - Split lattice variables into passive/active partitions.
    - Update active part with
-     - s_theta(.): scale network
-     - t_theta(.): shift network
+     - `s_theta(.)`: scale network
+     - `t_theta(.)`: shift network
    - Maintain tractable log-Jacobian accumulation for training/inference.
 
 5. **⚑ Activation choice for s_theta and t_theta**
@@ -30,7 +30,7 @@
      - `x_active' = x_active * exp(s_theta(x_passive)) + t_theta(x_passive)`
    - Practical stability option:
      - `s_theta = alpha * tanh(s_theta_hat)`, with `alpha in [1,3]`
-     - t_theta unconstrained linear head (optionally zero-centered initialization)
+     - `t_theta` unconstrained linear head (optionally zero-centered initialization)
 
 7. **Train the model**
    - Optimize reverse KL (or mixed objective) between flow-induced distribution and lattice target.
