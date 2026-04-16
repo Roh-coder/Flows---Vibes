@@ -3,8 +3,8 @@
 ## Indexed implementation workflow: ML flow for lattice field theory
 
 1. **Define the target lattice theory setup**
-   - Choose dimensionality, lattice size, boundary conditions, and action (for example, scalar phi^4, gauge, or effective model).
-   - Fix the probability target p(x) ∝ exp(-S(x)), observables, and acceptance-quality metrics.
+   - Choose dimensionality, lattice size, boundary conditions, and action (for example, scalar φ⁴, gauge, or effective model).
+   - Fix the probability target `p(x) ∝ exp(-S(x))`, observables, and acceptance-quality metrics.
 
 2. **Generate baseline data and diagnostics**
    - Produce reference samples (HMC/MCMC or trusted simulators) on representative lattice sizes.
@@ -23,13 +23,13 @@
 
 5. **⚑ Activation choice for s_theta and t_theta**
    - **Recommended default:** GELU or SiLU in hidden layers for smooth gradients.
-   - Use linear output heads for both networks; constrain s_theta through a bounded map (for stability), e.g. alpha * tanh(s_theta_hat).
+   - Use linear output heads for both networks; constrain s_theta through a bounded map (for stability), e.g. `alpha * tanh(s_theta_hat)`.
 
 6. **⚑ Parameterization choice for s_theta and t_theta**
    - Parameterize the affine coupling as
-     - x_active' = x_active * exp(s_theta(x_passive)) + t_theta(x_passive)
+     - `x_active' = x_active * exp(s_theta(x_passive)) + t_theta(x_passive)`
    - Practical stability option:
-     - s_theta = alpha * tanh(s_theta_hat), with alpha in [1,3]
+     - `s_theta = alpha * tanh(s_theta_hat)`, with `alpha in [1,3]`
      - t_theta unconstrained linear head (optionally zero-centered initialization)
 
 7. **Train the model**
